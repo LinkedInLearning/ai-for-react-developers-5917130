@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { streamComponent } from "./actions";
+import { FancyButton } from "../components/fancy-button.jsx";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -16,7 +17,7 @@ export default function Home() {
           setComponent(await streamComponent());
         }}
       >
-        <button>Get Component</button>
+        <FancyButton />
       </form>
       <div>{component}</div>
     </div>
