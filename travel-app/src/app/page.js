@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { getAnswer } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
