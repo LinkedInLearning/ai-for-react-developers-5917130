@@ -1,0 +1,1 @@
+# Placeholder in empty folder
