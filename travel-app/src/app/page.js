@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { getData } from "./actions";
+import { generate } from "./actions";
+import { readStreamableValue } from "ai/rsc";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -9,18 +10,30 @@ export const maxDuration = 30;
 export default function Home() {
   const [generation, setGeneration] = useState("");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div>
       <button
         onClick={async () => {
-          const { people } = await getData(
-            "people who sound like they have superhero names"
+          const { object } = await generate(
+            "people who have very superhero-like names"
           );
-          setGeneration(JSON.stringify(people, null, 2));
+          for await (const partialObject of readStreamableValue(
+            object
+          )) {
+            if (partialObject) {
+              setGeneration(
+                JSON.stringify(
+                  partialObject.people,
+                  null,
+                  2
+                )
+              );
+            }
+          }
         }}
       >
         View People!
       </button>
       <pre>{generation}</pre>
-    </main>
+    </div>
   );
 }
