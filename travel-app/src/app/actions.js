@@ -1,6 +1,6 @@
 "use server";
 
-import { streamUI } from "ai";
+import { streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
 
 export async function streamComponent() {
