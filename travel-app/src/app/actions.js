@@ -9,7 +9,7 @@ export async function getData(input) {
   const { object: people } = await generateObject({
     model: openai("gpt-4-turbo"),
     system: "You generate fake data for three people",
-    prompt: "input",
+    prompt: input,
     schema: z.object({
       people: z.array(
         z.object({
