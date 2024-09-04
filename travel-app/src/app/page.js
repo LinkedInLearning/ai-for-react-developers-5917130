@@ -10,26 +10,30 @@ export const maxDuration = 30;
 export default function Home() {
   const [generation, setGeneration] = useState("");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div>
       <button
         onClick={async () => {
-          const { output } = await generate(
-            "What is the deepest lake in the US? Make your answer very wordy."
+          const { object } = await generate(
+            "people who have very superhero-like names"
           );
-
-          for await (const delta of readStreamableValue(
-            output
+          for await (const partialObject of readStreamableValue(
+            object
           )) {
-            setGeneration(
-              (currentGeneration) =>
-                `${currentGeneration}${delta}`
-            );
+            if (partialObject) {
+              setGeneration(
+                JSON.stringify(
+                  partialObject.people,
+                  null,
+                  2
+                )
+              );
+            }
           }
         }}
       >
-        Ask!
+        View People!
       </button>
-      <div>{generation}</div>
-    </main>
+      <pre>{generation}</pre>
+    </div>
   );
 }
