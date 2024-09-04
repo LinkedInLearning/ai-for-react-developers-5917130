@@ -7,8 +7,7 @@ export default function Home() {
     messages,
     input,
     handleInputChange,
-    handleSubmit,
-    isLoading
+    handleSubmit
   } = useChat();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -19,18 +18,11 @@ export default function Home() {
         </div>
       ))}
 
-      {isLoading && (
-        <div>
-          <h1>LOADING...</h1>
-        </div>
-      )}
-
       <form onSubmit={handleSubmit}>
         <input
           value={input}
           placeholder="Ask what to do at a location"
           onChange={handleInputChange}
-          disabled={isLoading}
         />
       </form>
     </main>
