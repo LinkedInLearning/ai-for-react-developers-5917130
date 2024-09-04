@@ -1,30 +1,26 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { useState } from "react";
+import { getAnswer } from "./actions";
+
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 
 export default function Home() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit
-  } = useChat();
+  const [generation, setGeneration] = useState("");
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {messages.map((m) => (
-        <div key={m.id}>
-          {m.role === "user" ? "User: " : "AI: "}
-          {m.content}
-        </div>
-      ))}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          value={input}
-          placeholder="Ask what to do at a location"
-          onChange={handleInputChange}
-        />
-      </form>
+      <button
+        onClick={async () => {
+          const { text } = await getAnswer(
+            "What is the deepest lake in the US?"
+          );
+          setGeneration(text);
+        }}
+      >
+        Ask!
+      </button>
+      <div>{generation}</div>
     </main>
   );
 }
