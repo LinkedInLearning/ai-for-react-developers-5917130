@@ -1,39 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { generate } from "./actions";
-import { readStreamableValue } from "ai/rsc";
+import { streamComponent } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 export default function Home() {
-  const [generation, setGeneration] = useState("");
+  const [component, setComponent] = useState("");
   return (
     <div>
-      <button
-        onClick={async () => {
-          const { object } = await generate(
-            "people who have very superhero-like names"
-          );
-          for await (const partialObject of readStreamableValue(
-            object
-          )) {
-            if (partialObject) {
-              setGeneration(
-                JSON.stringify(
-                  partialObject.people,
-                  null,
-                  2
-                )
-              );
-            }
-          }
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setComponent(await streamComponent());
         }}
       >
-        View People!
-      </button>
-      <pre>{generation}</pre>
+        <button>Get Component</button>
+      </form>
+      <div>{component}</div>
     </div>
   );
 }
