@@ -1,30 +1,28 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { useCompletion } from "ai/react";
 
 export default function Home() {
   const {
-    messages,
+    completion,
     input,
     handleInputChange,
     handleSubmit
-  } = useChat();
+  } = useCompletion();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {messages.map((m) => (
-        <div key={m.id}>
-          {m.role === "user" ? "User: " : "AI: "}
-          {m.content}
-        </div>
-      ))}
-
       <form onSubmit={handleSubmit}>
         <input
           value={input}
-          placeholder="Ask what to do at a location"
+          placeholder="What to do where"
           onChange={handleInputChange}
         />
       </form>
+      {completion ? (
+        <div>{completion}</div>
+      ) : (
+        <div>Recommend places to visit...</div>
+      )}
     </main>
   );
 }
